@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>IPC Debugger – Web Simulator</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<header>
+  <div>
+    <h1>IPC Debugger – Web Simulator</h1>
+    <span>Visual tool for pipes, message queues & shared memory</span>
+  </div>
+  <span class="small">Inter-Process Communication Project</span>
+</header>
+
+<main class="layout">
+  <nav class="sidebar-nav">
+    <div class="nav-section-title">DEBUGGER</div>
+
+    <button class="nav-item active" data-step="1">
+      <span class="title">1. Processes</span>
+      <span class="desc">Define producers, consumers & timing</span>
+    </button>
+
+    <button class="nav-item" data-step="2">
+      <span class="title">2. IPC Channels</span>
+      <span class="desc">Connect processes via pipe / queue / shared</span>
+    </button>
+
+    <button class="nav-item" data-step="3">
+      <span class="title">3. Simulation</span>
+      <span class="desc">Run and visualize IPC activity</span>
+    </button>
+
+    <button class="nav-item" data-step="4">
+      <span class="title">4. Debugging</span>
+      <span class="desc">Analyze issues, logs & bottlenecks</span>
+    </button>
+    <div class="sidebar-logo">
+      <img src="debugger-logo.png" alt="Debugger Logo" />
+      <span class="logo-caption">IPC Debugger</span>
+    </div>
+  </nav>
+
+  <section class="main-area">
+    <div id="step-1" class="step active-step">
+      <div class="step-header">
+        <div class="step-header-left">
+          <div class="step-title">Step 1 · Process Selection</div>
+          <div class="step-subtitle">Create processes and choose whether they send, receive, or do both.</div>
+        </div>
+        <div class="step-header-right">
+          Step 1 of 4
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>Processes <span class="small" id="process-count">0 added</span></h2>
+        <div>
+          <label for="proc-name">Process Name</label>
+          <input id="proc-name" type="text" placeholder="e.g. P1 / Producer1" />
+
+          <label for="proc-role">Role</label>
+          <select id="proc-role">
+            <option value="producer">Producer (send)</option>
+            <option value="consumer">Consumer (receive)</option>
+            <option value="mixed">Mixed (send & receive)</option>
+          </select>
+
+          <label for="proc-interval">Action Interval (ms)</label>
+          <input id="proc-interval" type="number" value="800" min="100" />
+
+          <button id="add-process-btn">+ Add Process</button>
+          <div class="hint">
+            Each process periodically sends and/or receives messages based on its role.
+            When you're done, move to <strong>Step 2 · IPC Channels</strong>.
+          </div>
+        </div>
+
+        <div class="list" id="process-list"></div>
+      </div>
+    </div>
+
+    <div id="step-2" class="step">
+      <div class="step-header">
+        <div class="step-header-left">
+          <div class="step-title">Step 2 · IPC Channels & Settings</div>
+          <div class="step-subtitle">Connect processes with pipes, message queues and shared memory.</div>
+        </div>
+        <div class="step-header-right">
+          Step 2 of 4
+        </div>
+      </div>
+
+      <div class="step2-grid">
+        <div class="panel">
+          <h2>IPC Channels</h2>
+          <div>
+            <label for="channel-type">Type</label>
+            <select id="channel-type">
+              <option value="pipe">Pipe (1:1)</option>
+              <option value="queue">Message Queue (1:1 here)</option>
+              <option value="shared">Shared Memory</option>
+            </select>
+
+            <label for="channel-from">From Process</label>
+            <select id="channel-from"></select>
+
+            <label for="channel-to">To Process</label>
+            <select id="channel-to"></select>
+
+            <label for="channel-capacity">Capacity (for pipe/queue)</label>
+            <input id="channel-capacity" type="number" value="5" min="1" />
+
+            <button id="add-channel-btn">+ Add Channel</button>
+            <div class="hint">
+              Shared memory behaves like a shared variable; capacity is ignored.
+              Pipes and queues use capacity to simulate buffer limits.
+            </div>
+          </div>
+
+          <div class="list" id="channel-list"></div>
+        </div>
+
+        <div class="panel">
+          <h2>Simulation Settings</h2>
+          <label for="tick-interval">Simulation Tick (ms)</label>
+          <input id="tick-interval" type="number" value="500" min="100" />
+
+          <label for="block-threshold">Block Threshold (ms) for Warning</label>
+          <input id="block-threshold" type="number" value="3000" min="500" />
+
+          <div class="hint">
+            If a process stays blocked longer than this threshold,
+            it is flagged as a potential <strong>deadlock</strong> or <strong>bottleneck</strong>.
+          </div>
+
+          <div class="hint" style="margin-top:8px;">
+            After channels and settings are ready, go to <strong>Step 3 · Simulation</strong>.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="step-3" class="step">
+      <div class="step-header">
+        <div class="step-header-left">
+          <div class="step-title">Step 3 · Simulation</div>
+          <div class="step-subtitle">
+            Start the IPC simulation and watch processes interact through pipes, queues, and shared memory.
+          </div>
+        </div>
+        <div class="step-header-right">
+          Step 3 of 4
+        </div>
+      </div>
+
+      <div class="top-bar">
+        <div class="top-bar-left">
+          <button id="start-btn">▶ Start Simulation</button>
+          <button class="secondary" id="pause-btn" disabled>⏸ Pause</button>
+          <button class="secondary" id="reset-btn">↺ Reset</button>
+        </div>
+        <div class="top-bar-right">
+          <span>State: <strong id="sim-state">Idle</strong></span>
+          <span class="badge" id="time-badge">t = 0 ms</span>
+        </div>
+      </div>
+
+      <div class="graph-panel">
+        <div class="graph-area">
+          <div class="graph-header">
+            <h3>Process Graph</h3>
+            <div class="legend">
+              <div class="legend-pill">
+                <span class="legend-dot dot-running"></span> running
+              </div>
+              <div class="legend-pill">
+                <span class="legend-dot dot-waiting"></span> waiting
+              </div>
+              <div class="legend-pill">
+                <span class="legend-dot dot-blocked"></span> blocked
+              </div>
+              <div class="legend-pill">
+                <span class="channel-dot dot-pipe"></span> pipe
+              </div>
+              <div class="legend-pill">
+                <span class="channel-dot dot-queue"></span> queue
+              </div>
+              <div class="legend-pill">
+                <span class="channel-dot dot-shared"></span> shared
+              </div>
+            </div>
+          </div>
+          <div class="process-grid" id="process-cards"></div>
+        </div>
+      </div>
+
+      <div class="hint">
+        For detailed issues and logs, open <strong>Step 4 · Debugging</strong>.
+      </div>
+    </div>
+
+    <div id="step-4" class="step">
+      <div class="step-header">
+        <div class="step-header-left">
+          <div class="step-title">Step 4 · Debugging</div>
+          <div class="step-subtitle">
+            Inspect detected deadlocks, bottlenecks and synchronization issues, with a detailed event log.
+          </div>
+        </div>
+        <div class="step-header-right">
+          Step 4 of 4
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>Debugging Overview</h2>
+        <div class="hint">
+          The debugger highlights:
+          <ul style="margin:4px 0 0 16px; padding:0; font-size:10px;">
+            <li><strong>Blocked sends</strong> → buffer full (receiver bottleneck)</li>
+            <li><strong>Blocked receives</strong> → buffer empty (slow producer)</li>
+            <li><strong>Long blocking</strong> → possible deadlock</li>
+            <li><strong>Multiple writers</strong> on shared memory → race condition</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="side-panel-logs">
+        <div class="side-section">
+          <h3>Detected Issues</h3>
+          <div class="issues-list" id="issues-list">
+            <div class="hint">No issues yet. Run the simulation in Step 3 to see potential problems here.</div>
+          </div>
+        </div>
+
+        <div class="side-section">
+          <h3>Event Log</h3>
+          <div class="logs">
+            <table>
+              <thead>
+              <tr>
+                <th>Time</th>
+                <th>Process</th>
+                <th>Event</th>
+                <th>Channel</th>
+                <th>Details</th>
+              </tr>
+              </thead>
+              <tbody id="log-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
