@@ -104,11 +104,14 @@ main.layout {
   width: 72px;                    /* adjust if needed */
   height: auto;
   border-radius: 12px;
+  display: none;                  /* hide if no image */
 }
 
 .sidebar-logo .logo-caption {
-  font-size: 10px;
-  color: #6b7280;
+  font-size: 12px;
+  font-weight: 600;
+  color: #2563eb;
+  text-align: center;
 }
 
 .main-area {
