@@ -47,8 +47,13 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', timestamp: new Date() });
 });
 
-// Serve main page
+// Landing page (home)
 app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'landing.html'));
+});
+
+// Serve debugger
+app.get('/debugger', (req, res) => {
   res.sendFile(path.join(__dirname, 'index1.html'));
 });
 

@@ -4,8 +4,50 @@
   <meta charset="UTF-8" />
   <title>IPC Debugger – Web Simulator</title>
   <link rel="stylesheet" href="styles.css" />
+  <style>
+    .debugger-header {
+      background: linear-gradient(90deg, #0f172a, #1e293b);
+      color: white;
+      padding: 12px 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .debugger-header h2 {
+      margin: 0;
+      font-size: 16px;
+    }
+
+    .debugger-nav {
+      display: flex;
+      gap: 12px;
+    }
+
+    .debugger-nav a {
+      color: white;
+      text-decoration: none;
+      font-size: 12px;
+      padding: 6px 10px;
+      border-radius: 4px;
+      transition: background 0.2s ease;
+    }
+
+    .debugger-nav a:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+  </style>
 </head>
 <body>
+<div class="debugger-header">
+  <h2>IPC Debugger</h2>
+  <div class="debugger-nav">
+    <a href="/">Home</a>
+    <a href="/debugger">Debugger</a>
+    <a href="https://github.com/Nithya-Ch/IPC_DEBUGGER" target="_blank">GitHub</a>
+  </div>
+</div>
 <header>
   <div>
     <h1>IPC Debugger – Web Simulator</h1>
@@ -258,6 +300,10 @@
     </div>
   </section>
 </main>
+
+<footer style="background: #0f172a; color: #e5e7eb; padding: 16px 20px; text-align: center; font-size: 11px; border-top: 1px solid #1e293b; margin-top: auto;">
+  <p style="margin: 4px 0;">IPC Debugger v1.0 | <a href="/" style="color: #93c5fd; text-decoration: none;">Home</a> | <a href="https://github.com/Nithya-Ch/IPC_DEBUGGER" style="color: #93c5fd; text-decoration: none;">GitHub</a> | Inter-Process Communication Simulator</p>
+</footer>
 
 <script src="script.js"></script>
 </body>

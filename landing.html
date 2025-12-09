@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IPC Debugger – Home</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    .landing-container {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #f3f4f6, #ffffff);
+    }
+
+    .landing-header {
+      background: linear-gradient(90deg, #0f172a, #1e293b);
+      color: white;
+      padding: 16px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .landing-header h2 {
+      margin: 0;
+      font-size: 20px;
+    }
+
+    .landing-nav {
+      display: flex;
+      gap: 16px;
+    }
+
+    .landing-nav a {
+      color: white;
+      text-decoration: none;
+      font-size: 13px;
+      padding: 8px 12px;
+      border-radius: 6px;
+      transition: background 0.2s ease;
+    }
+
+    .landing-nav a:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .landing-hero {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 60px 20px;
+    }
+
+    .landing-hero h1 {
+      font-size: 48px;
+      font-weight: 700;
+      margin: 0 0 16px 0;
+      background: linear-gradient(135deg, #0f172a, #1e40af);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .landing-hero p {
+      font-size: 18px;
+      color: #6b7280;
+      margin: 0 0 40px 0;
+      max-width: 600px;
+    }
+
+    .landing-cta {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .landing-cta a {
+      text-decoration: none;
+    }
+
+    .cta-primary {
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: white;
+      padding: 14px 36px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 15px;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    }
+
+    .cta-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4);
+    }
+
+    .cta-secondary {
+      background: white;
+      color: #2563eb;
+      padding: 14px 36px;
+      border: 2px solid #2563eb;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 15px;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .cta-secondary:hover {
+      background: #eff6ff;
+      transform: translateY(-2px);
+    }
+
+    footer {
+      background: #0f172a;
+      color: #e5e7eb;
+      padding: 20px;
+      text-align: center;
+      font-size: 12px;
+      border-top: 1px solid #1e293b;
+      margin-top: auto;
+    }
+
+    footer a {
+      color: #93c5fd;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    footer a:hover {
+      color: #bfdbfe;
+    }
+  </style>
+</head>
+<body>
+  <div class="landing-container">
+    <div class="landing-header">
+      <h2>IPC Debugger</h2>
+      <div class="landing-nav">
+        <a href="/">Home</a>
+        <a href="/debugger">Debugger</a>
+        <a href="https://github.com/Nithya-Ch/IPC_DEBUGGER" target="_blank">GitHub</a>
+      </div>
+    </div>
+
+    <div class="landing-hero">
+      <h1>IPC Debugger</h1>
+      <p>Visual simulator and debugger for Inter-Process Communication. Understand pipes, message queues, and shared memory in action.</p>
+      <div class="landing-cta">
+        <a href="/debugger" class="cta-primary">Launch Debugger</a>
+        <a href="#about" class="cta-secondary">Learn More</a>
+      </div>
+    </div>
+
+    <footer>
+      <p>IPC Debugger v1.0 | <a href="https://github.com/Nithya-Ch/IPC_DEBUGGER">GitHub</a> | Built with Node.js &amp; Express</p>
+    </footer>
+  </div>
+</body>
+</html>
