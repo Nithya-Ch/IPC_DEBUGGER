@@ -12,12 +12,17 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
 
     .debugger-header h2 {
       margin: 0;
       font-size: 16px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
     }
 
     .debugger-nav {
@@ -28,14 +33,29 @@
     .debugger-nav a {
       color: white;
       text-decoration: none;
-      font-size: 12px;
-      padding: 6px 10px;
-      border-radius: 4px;
-      transition: background 0.2s ease;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 10px 16px;
+      border-radius: 6px;
+      transition: all 0.2s ease;
+      border: 2px solid transparent;
     }
 
     .debugger-nav a:hover {
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.4);
+      transform: translateY(-1px);
+    }
+
+    .debugger-nav a[href="/"] {
+      background: rgba(107, 114, 128, 0.5);
+      border-color: rgba(107, 114, 128, 0.7);
+      font-weight: 600;
+    }
+
+    .debugger-nav a[href="/"]:hover {
+      background: rgba(107, 114, 128, 0.8);
+      border-color: #9ca3af;
     }
   </style>
 </head>
