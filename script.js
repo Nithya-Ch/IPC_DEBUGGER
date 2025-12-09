@@ -593,3 +593,8 @@ renderChannelList();
 renderIssues([]);
 renderProcessCards(sim.processes, sim.channels);
 updateSimStateLabel();
+
+// Initialize and log that script is loaded
+console.log('✅ IPC Debugger script loaded successfully');
+console.log('Ready to create processes and channels');
+
