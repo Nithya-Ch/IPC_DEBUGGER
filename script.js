@@ -531,6 +531,63 @@ document.getElementById('reset-btn').addEventListener('click', () => {
   updateSimStateLabel();
 });
 
+document.getElementById('save-btn').addEventListener('click', () => {
+  const name = prompt('Simulation name (optional):', '');
+  if (name !== null) {
+    saveSimulation(name);
+  }
+});
+
+// Backend API functions
+async function saveSimulation(name) {
+  try {
+    const processesArray = Array.from(sim.processes.values());
+    const channelsArray = Array.from(sim.channels.values()).map(ch => ({
+      id: ch.id,
+      type: ch.type,
+      fromId: ch.fromId,
+      toId: ch.toId,
+      capacity: ch.capacity,
+      buffer: ch.buffer,
+      lastWriter: ch.lastWriter,
+      sharedValue: ch.sharedValue
+    }));
+    
+    const response = await fetch('/api/simulations', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: name || `sim-${new Date().toLocaleString()}`,
+        processes: processesArray,
+        channels: channelsArray,
+        logs: sim.logs,
+        issues: sim.issues,
+        timeMs: sim.timeMs
+      })
+    });
+    
+    const data = await response.json();
+    if (data.success) {
+      alert(`Simulation saved: ${data.id}`);
+      return data.id;
+    }
+  } catch (err) {
+    console.error('Save failed:', err);
+    alert('Failed to save simulation');
+  }
+}
+
+async function loadSimulations() {
+  try {
+    const response = await fetch('/api/simulations');
+    const sims = await response.json();
+    return sims;
+  } catch (err) {
+    console.error('Load failed:', err);
+    return [];
+  }
+}
+
 renderProcessList();
 renderChannelList();
 renderIssues([]);
